@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+    defaultConfig {
+        applicationId "org.asdtm.goodweather"
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 13
+        versionName "4.4"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFileName = new File(
+                            "./../../../../../build/",
+                            output.outputFile.name.replace("app-release.apk", "GoodWeather-release-${variant.versionName}.apk"))
+                }
+            }
+        }
+        debug {
+            minifyEnabled false
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFileName = new File(
+                            "./../../../../../build/",
+                            output.outputFile.name.replace("app-debug.apk", "GoodWeather-debug-${variant.versionName}.apk"))
+                }
+            }
+        }
+    }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:design:25.3.1'
+    implementation 'com.android.support:cardview-v7:25.3.1'
+    implementation 'com.android.support:support-v4:25.3.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+}
